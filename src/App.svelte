@@ -3,32 +3,65 @@
     let year = 2022;
     let month = 1;
     $: items = axios.get(`http://kml_back.asdfghjkkl11.com/get/ranking?year=${year}&month=${month}`).then(
-        response => response.data
+        function (response) {
+            let result = response.data;
+            console.log(result)
+            if(result.code === 200) {
+                return result.data
+            }else{
+                return {};
+            }
+        }
     )
-    $: if(items){
-        console.log(items)
+
+    let tableColDef = {
+        "종합기록(승점순)": ["순위","이름","승점","승점%","승%","12%","+%","-2%","+3%","4%","승","2","3","4","순율","국수"],
+        "다승": ["순위","이름","승","국수"],
+        "국수(마작폐인순)": ["순위","이름","국수"],
+        "승률(승%)": ["순위","이름","승%","국수"],
+        "승점률(승점%)": ["순위","이름","승점%","국수"],
+        "1, 2위률(12%)": ["순위","이름","12%","국수"],
+        "4위률(4%)": ["순위","이름","4%","국수"],
     }
 </script>
 
 <header>
     <div class="wrap">
-        <h1 class="main-title">REST API PAGE</h1>
-        <p>페이지 소개 : api를 이용한 테스트 페이지 입니다. 11</p>
+        <h1 class="main-title">지니어스 마작 동아리</h1>
     </div>
 </header>
 <div class="main" id="main" >
     {#await items}
         <p>...Loading</p>
     {:then items }
-        {items}
-        <ul>
-            {#each items as item, index}
-                <li>
-                    <p>[{item.id}] {item.title}</p>
-                </li>
-            {/each}
-        </ul>
+        {#each Object.entries(items) as [title,list]}
+            <p>{title}</p>
+            <table>
+                <tr>
+                    {#each tableColDef[title] as header}
+                        <th>{header}</th>
+                    {/each}
+                </tr>
+                {#each list as data}
+                <tr>
+                    {#each tableColDef[title] as header}
+                        <td>{data[header]}</td>
+                    {/each}
+                </tr>
+                {/each}
+            </table>
+        {/each}
     {:catch error}
         <p>오류가 발생했습니다.</p>
     {/await}
 </div>
+<style>
+    table, td, th {
+        border : 1px solid black;
+        border-collapse : collapse;
+        text-align: center;
+    }
+    td, th{
+        padding: 4px;
+    }
+</style>
