@@ -79,6 +79,8 @@ export default {
 	],
 	watch: {
 		clearScreen: false,
-		chokidar: false
+		chokidar: {
+			usePolling: true
+		}
 	}
 };
