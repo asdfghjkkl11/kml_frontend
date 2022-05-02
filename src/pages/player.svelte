@@ -1,6 +1,5 @@
 <script lang="ts">
     import axios from 'axios';
-    import PlayerSelect from '../player_select.svelte';
     $: items = getPlayer();
 
     let tableColDef = ["id","name"];
