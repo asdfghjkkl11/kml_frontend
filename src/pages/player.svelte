@@ -1,7 +1,6 @@
 <script lang="ts">
     import axios from 'axios';
-
-    const urlParams = new URLSearchParams(window.location.search);
+    import PlayerSelect from '../player_select.svelte';
     $: items = getPlayer();
 
     let tableColDef = ["id","name"];
