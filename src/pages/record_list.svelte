@@ -28,7 +28,7 @@
     {#await items}
         <p>...Loading</p>
     {:then items }
-        <p>기록</p>
+        <p>전체 기록</p>
         <table>
             <tr>
                 {#each tableColDef as header}
