@@ -1,0 +1,62 @@
+<script lang="ts">
+    import axios from 'axios';
+
+    const urlParams = new URLSearchParams(window.location.search);
+    let year = urlParams.get('year');
+    let month = urlParams.get('month');
+
+    if(year == null || month == null){
+        let date = new Date();
+        year = date.getFullYear().toString();
+        month = date.getMonth().toString();
+    }
+
+    $: items = axios.get(`http://kml_back.asdfghjkkl11.com/get/record_list?year=${year}&month=${month}`).then(
+        function (response) {
+            let result = response.data;
+            console.log(result)
+            if(result.code === 200) {
+                return result.data
+            }else{
+                return [];
+            }
+        }
+    )
+    let tableColDef = ["no.","일시","국 길이","1위","2위","3위","4위","공탁점","관리"];
+</script>
+<div class="main" id="main" >
+    {#await items}
+        <p>...Loading</p>
+    {:then items }
+        <p>기록</p>
+        <table>
+            <tr>
+                {#each tableColDef as header}
+                    <th>{header}</th>
+                {/each}
+            </tr>
+            {#each items as data}
+                <tr>
+                {#each tableColDef as header}
+                    {#if data[header] == null}
+                    {:else}
+                        <td>{data[header]}</td>
+                    {/if}
+                {/each}
+                </tr>
+            {/each}
+        </table>
+    {:catch error}
+        <p>오류가 발생했습니다.</p>
+    {/await}
+</div>
+<style>
+    table, td, th {
+        border : 1px solid black;
+        border-collapse : collapse;
+        text-align: center;
+    }
+    td, th{
+        padding: 4px;
+    }
+</style>
