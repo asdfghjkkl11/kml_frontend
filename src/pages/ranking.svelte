@@ -8,7 +8,7 @@
     if(year == null || month == null){
         let date = new Date();
         year = date.getFullYear().toString();
-        month = date.getMonth().toString();
+        month = (date.getMonth()+1).toString();
     }
 
     $: items = axios.get(`http://kml_back.asdfghjkkl11.com/get/ranking?year=${year}&month=${month}`).then(
