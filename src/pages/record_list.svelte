@@ -1,15 +1,10 @@
 <script lang="ts">
     import axios from 'axios';
 
-    const urlParams = new URLSearchParams(window.location.search);
-    let year = urlParams.get('year');
-    let month = urlParams.get('month');
-
-    if(year == null || month == null){
-        let date = new Date();
-        year = date.getFullYear().toString();
-        month = (date.getMonth()+1).toString();
-    }
+    let date = new Date();
+    let rankDt = date.getFullYear().toString()+"-"+(date.getMonth()+1).toString();
+    $: year = rankDt.split("-")[0];
+    $: month = rankDt.split("-")[1];
 
     $: items = axios.get(`http://kml_back.asdfghjkkl11.com/get/record_list?year=${year}&month=${month}`).then(
         function (response) {
@@ -23,7 +18,30 @@
         }
     )
     let tableColDef = ["no.","일시","국 길이","1위","2위","3위","4위","공탁점","관리"];
+
+    window.onload = function() {
+        const elems = document.getElementById('ranking-datepicker');
+
+        const datepicker = new Datepicker(elems, {
+            format: 'yyyy-mm', // UK format
+            pickLevel: 1,
+            language: 'ko',
+        });
+
+        elems.addEventListener('changeDate', function(e) {
+            if(rankDt !== this.value) {
+                rankDt = this.value;
+            }
+        });
+    }
 </script>
+<div class="date-area">
+    <p class="title">{year}년 {month}월 기록</p>
+    <div>
+        <span>날짜선택: </span>
+        <input type="text" id="ranking-datepicker" class="datepicker-input" bind:value="{rankDt}" readonly>
+    </div>
+</div>
 <div class="main" id="main" >
     {#await items}
         <p>...Loading</p>
@@ -51,6 +69,14 @@
     {/await}
 </div>
 <style>
+    .title{
+        font-size: 20px;
+        font-weight: bold;
+    }
+    .date-area{
+        display: flex;
+        justify-content: space-between;
+    }
     table, td, th {
         border : 1px solid black;
         border-collapse : collapse;

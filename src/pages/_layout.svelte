@@ -2,11 +2,11 @@
     <nav class="navbar navbar-expand-lg navbar-light bg-light" aria-label="Fifth navbar example">
         <div class="container-fluid">
             <a class="navbar-brand" href="/">지니어스 마작 동아리</a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarsExample05" aria-controls="navbarsExample05" aria-expanded="false" aria-label="Toggle navigation">
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#head-navbar" aria-controls="head-navbar" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
 
-            <div class="collapse navbar-collapse" id="navbarsExample05">
+            <div class="collapse navbar-collapse" id="head-navbar">
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                     <li class="nav-item">
                         <a class="nav-link" aria-current="page" href="/record">기록입력</a>
@@ -49,6 +49,7 @@
         flex: 1;
         border-top: 1px solid #a0a0a0;
         border-bottom: 1px solid #a0a0a0;
+        overflow-x: auto;
     }
     .footer{
         flex-shrink: 0;

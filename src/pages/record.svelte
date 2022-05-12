@@ -1,6 +1,6 @@
 <script lang="ts">
     import axios from 'axios';
-    import PlayerScore from '../player_score.svelte';
+    import PlayerScore from '../components/player_score.svelte';
 
     let game_length = '1';
     $: player = [
