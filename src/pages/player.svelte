@@ -9,7 +9,7 @@
         if(playerName === ""){
             alert("이름을 적어주세요.");
         }else{
-            let result = postPlayer();
+            postPlayer();
         }
     }
     
@@ -32,7 +32,7 @@
             "nick": playerName
         };
 
-        return axios.post(`http://kml_back.asdfghjkkl11.com/post/registid_ok`,data).then(
+        axios.post(`http://kml_back.asdfghjkkl11.com/post/registid_ok`,data).then(
             function (response) {
                 let result = response.data;
                 console.log(result)
