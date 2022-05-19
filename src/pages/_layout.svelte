@@ -38,9 +38,6 @@
     Copyright © 2022 asdfghjkkl11
 </div>
 <style>
-    .navbar{
-        min-width: 300px;
-    }
     .header{
         flex-shrink: 0;
     }

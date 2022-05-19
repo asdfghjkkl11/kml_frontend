@@ -4,6 +4,10 @@ html, body {
 	height: 100%;
 }
 
+html{
+	min-width: 328px;
+}
+
 body {
 	display: flex;
 	flex-direction: column;
@@ -62,4 +66,9 @@ button:not(:disabled):active {
 
 button:focus {
 	border-color: #666;
+}
+
+#main{
+	max-width: 1024px;
+	margin: 0 auto;
 }

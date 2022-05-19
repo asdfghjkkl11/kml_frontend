@@ -22,14 +22,18 @@
         });
     }
 </script>
-<div class="date-area">
-    <p class="title">{year}년 {month}월 순위</p>
-    <div>
-        <span>날짜선택: </span>
-        <input type="text" id="ranking-datepicker" class="datepicker-input" bind:value="{rankDt}" readonly>
+<div id="main" class="main">
+    <div class="date-area">
+        <div class="flex">
+            <span class="title">{year}년 {month}월 순위</span>
+        </div>
+        <div class="flex">
+            <span>날짜선택: </span>
+            <input type="text" id="ranking-datepicker" class="datepicker-input" bind:value="{rankDt}" readonly>
+        </div>
     </div>
+    <Rank {year} {month}/>
 </div>
-<Rank {year} {month}/>
 <style>
     .title{
         font-size: 20px;
@@ -37,7 +41,13 @@
     }
     .date-area{
         display: flex;
-        justify-content: space-between;
+        gap: 40px;
         flex-wrap: wrap;
+    }
+    .flex{
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
     }
 </style>

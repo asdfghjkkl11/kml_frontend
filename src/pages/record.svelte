@@ -115,37 +115,54 @@
 
         return true;
     }
-
-    $:{
-
-    }
 </script>
-<div class="main" id="main">
+<div id="main" class="main flex">
     {#await items}
         <p>...Loading</p>
     {:then items }
-        <select bind:value={game_length}>
+        <select class="round-wind" bind:value={game_length}>
             <option value="0">동장</option>
             <option value="1" selected>남장(반장)</option>
             <option value="2" >서장</option>
             <option value="3" >북장(전장)</option>
         </select>
-
-        {#each player as info}
-            <PlayerScore bind:info={info} {items}/>
-        {/each}
-        <div>
-            <span>공탁금</span>
-            <input type="text" value="{commonPoint}"/>
+        <div class="flex">
+            {#each player as info}
+                <PlayerScore bind:info={info} {items}/>
+            {/each}
+        </div>
+        <div class="flex">
+            <div>
+                <span>공탁금</span>
+                <input type="text" class="common-point" value="{commonPoint}"/>
+            </div>
             <span>오차: <span class:error={zeroSum !== 0}>{zeroSum}</span></span>
         </div>
-        <button on:click={postRecord}>기록</button>
+        <button class="summit-record" on:click={postRecord}>기록</button>
     {:catch error}
         <p>오류가 발생했습니다.</p>
     {/await}
 </div>
 <style>
+    #main{
+        max-width: 312px;
+    }
+    .round-wind{
+        width: 312px;
+    }
     .error{
         color: red;
+    }
+    .flex{
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+    }
+    .common-point{
+        width: 120px;
+    }
+    .summit-record{
+        width: 80px;
+        align-self: end;
     }
 </style>

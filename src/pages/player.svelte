@@ -50,7 +50,7 @@
         )
     }
 </script>
-<div class="main" id="main" >
+<div id="main" class="main">
     <input type="text" id="input-name" bind:value="{playerName}"/>
     <button id="add-btn" on:click={registPlayer}>추가하기</button>
     {#await items}

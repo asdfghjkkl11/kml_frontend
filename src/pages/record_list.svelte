@@ -23,7 +23,7 @@
         const elems = document.getElementById('ranking-datepicker');
 
         const datepicker = new Datepicker(elems, {
-            format: 'yyyy-mm', // UK format
+            format: 'yyyy-mm',
             pickLevel: 1,
             language: 'ko',
         });
@@ -35,14 +35,14 @@
         });
     }
 </script>
-<div class="date-area">
-    <p class="title">{year}년 {month}월 기록</p>
-    <div>
-        <span>날짜선택: </span>
-        <input type="text" id="ranking-datepicker" class="datepicker-input" bind:value="{rankDt}" readonly>
+<div id="main" class="main">
+    <div class="date-area">
+        <p class="title">{year}년 {month}월 기록</p>
+        <div>
+            <span>날짜선택: </span>
+            <input type="text" id="ranking-datepicker" class="datepicker-input" bind:value="{rankDt}" readonly>
+        </div>
     </div>
-</div>
-<div class="main" id="main" >
     {#await items}
         <p>...Loading</p>
     {:then items }

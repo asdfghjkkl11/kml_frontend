@@ -27,7 +27,7 @@
     }
 
 </script>
-<div class="main" id="main" >
+<div id="main" class="main">
     {#await items}
         <p>...Loading</p>
     {:then items }

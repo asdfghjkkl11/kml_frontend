@@ -189,7 +189,7 @@
         ]
     }
 </script>
-<div class="main" id="main" >
+<div class="rank">
     {#await items}
         <p>...Loading</p>
     {:then items }
@@ -228,7 +228,7 @@
     td, th{
         padding: 4px;
     }
-    .main{
+    .rank{
         display: flex;
         flex-wrap: wrap;
         gap: 16px;

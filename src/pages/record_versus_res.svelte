@@ -25,7 +25,7 @@
         "전체 기록": ["no.","일시","국 길이","1위","2위","3위","4위","공탁점","관리"],
     }
 </script>
-<div class="main" id="main" >
+<div id="main" class="main">
     {#await items}
         <p>...Loading</p>
     {:then items }
