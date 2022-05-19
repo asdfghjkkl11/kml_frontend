@@ -36,7 +36,7 @@
         {/if}
     {/each}
     </select>
-    <input type="number" class="point" on:change = {changePoint}/>
+    <input type="number" class="point" on:change = {changePoint} value="{point}"/>
 </div>
 <style>
     .player{
