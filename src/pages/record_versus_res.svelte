@@ -4,7 +4,7 @@
     let id0 = null;
     let id1 = null;
 
-    let playerList = axios.get(`http://kml_back.asdfghjkkl11.com/get/player`).then(
+    let playerList = axios.get(serverURL+`/get/player`).then(
         function (response) {
             let result = response.data;
             console.log(result)
@@ -16,7 +16,7 @@
         }
     );
 
-    $: items = (id0 === null || id1 === null)?{}:axios.get(`http://kml_back.asdfghjkkl11.com/get/record_versus_res?id0=${id0}&id1=${id1}`).then(
+    $: items = (id0 === null || id1 === null)?{}:axios.get(serverURL+`/get/record_versus_res?id0=${id0}&id1=${id1}`).then(
         function (response) {
             let result = response.data;
             console.log(result)

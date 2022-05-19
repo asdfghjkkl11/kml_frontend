@@ -4,7 +4,7 @@
     export let year;
     export let month;
 
-    $: items = axios.get(`http://kml_back.asdfghjkkl11.com/get/ranking?year=${year}&month=${month}`).then(
+    $: items = axios.get(serverURL+`/get/ranking?year=${year}&month=${month}`).then(
         function (response) {
             let result = response.data;
             console.log(result)

@@ -8,7 +8,7 @@
     $: month = rankDt.split("-")[1];
 
     let itemMapper = {};
-    $: items = axios.get(`http://kml_back.asdfghjkkl11.com/get/record_list?year=${year}&month=${month}`).then(
+    $: items = axios.get(serverURL+`/get/record_list?year=${year}&month=${month}`).then(
         function (response) {
             let result = response.data;
             console.log(result)
@@ -91,7 +91,7 @@
         let data = {
             "id": id
         }
-        axios.post(`http://kml_back.asdfghjkkl11.com/post/record_del`, data).then(
+        axios.post(serverURL+`/post/record_del`, data).then(
             function (response) {
                 let result = response.data;
                 console.log(result)
@@ -114,7 +114,7 @@
         let data = {
             "id": id
         }
-        axios.post(`http://kml_back.asdfghjkkl11.com/post/record_res`, data).then(
+        axios.post(serverURL+`/post/record_res`, data).then(
             function (response) {
                 let result = response.data;
                 console.log(result)

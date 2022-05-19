@@ -33,7 +33,7 @@
     $: zeroSum = 100000 - Number(player[0].point) - Number(player[1].point) - Number(player[2].point) - Number(player[3].point) - Number(commonPoint);
     let playerList = [];
 
-    let items = axios.get(`http://kml_back.asdfghjkkl11.com/get/player`).then(
+    let items = axios.get(serverURL+`/get/player`).then(
         function (response) {
             let result = response.data;
             console.log(result)
@@ -68,7 +68,7 @@
                 "common_point": commonPoint,
             };
 
-            return axios.post(`http://kml_back.asdfghjkkl11.com/post/record_ok`, data).then(
+            return axios.post(serverURL+`/post/record_ok`, data).then(
                 function (response) {
                     let result = response.data;
                     console.log(result)

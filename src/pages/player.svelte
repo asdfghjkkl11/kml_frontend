@@ -14,7 +14,7 @@
     }
     
     function getPlayer() {
-        return axios.get(`http://kml_back.asdfghjkkl11.com/get/player`).then(
+        return axios.get(serverURL+`/get/player`).then(
             function (response) {
                 let result = response.data;
                 console.log(result)
@@ -32,7 +32,7 @@
             "nick": playerName
         };
 
-        axios.post(`http://kml_back.asdfghjkkl11.com/post/registid_ok`,data).then(
+        axios.post(serverURL+`/post/registid_ok`,data).then(
             function (response) {
                 let result = response.data;
                 console.log(result)

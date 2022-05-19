@@ -3,7 +3,7 @@
 
     let id = null;
 
-    let playerList = axios.get(`http://kml_back.asdfghjkkl11.com/get/player`).then(
+    let playerList = axios.get(serverURL+`/get/player`).then(
         function (response) {
             let result = response.data;
             console.log(result)
@@ -15,7 +15,7 @@
         }
     );
 
-    $: items = (id === null)?{}:axios.get(`http://kml_back.asdfghjkkl11.com/get/record_per?id=${id}`).then(
+    $: items = (id === null)?{}:axios.get(serverURL+`/get/record_per?id=${id}`).then(
         function (response) {
             let result = response.data;
             console.log(result)
