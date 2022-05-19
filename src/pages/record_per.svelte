@@ -15,16 +15,10 @@
         }
     );
 
-    let itemMapper = {};
     $: items = (id === null)?{}:axios.get(`http://kml_back.asdfghjkkl11.com/get/record_per?id=${id}`).then(
         function (response) {
             let result = response.data;
             console.log(result)
-
-            itemMapper = {};
-            for(let i in result.data["전체 기록"]){
-                itemMapper[result.data["전체 기록"][i]["no."]] = result.data["전체 기록"][i];
-            }
 
             if(result.code === 200) {
                 return result.data
@@ -398,57 +392,6 @@
     function changeId(){
         id = this.value;
     }
-
-    function editEvent(e){
-        let params = new URLSearchParams(itemMapper[this.dataset.id]);
-        location.href = "./record_modify?"+params.toString();
-    }
-
-    function deleteEvent(e){
-        let id = this.dataset.id;
-        let data = {
-            "id": id
-        }
-        axios.post(`http://kml_back.asdfghjkkl11.com/post/record_del`, data).then(
-            function (response) {
-                let result = response.data;
-                console.log(result)
-                if (result.code === 200) {
-                    if (result.data.result === "success") {
-                        alert("삭제되었습니다.");
-                        location.reload();
-                    }else{
-                        alert("삭제에 실패했습니다.");
-                    }
-                } else {
-                    alert("서버에러");
-                }
-            }
-        );
-    }
-
-    function restoreEvent(e){
-        let id = this.dataset.id;
-        let data = {
-            "id": id
-        }
-        axios.post(`http://kml_back.asdfghjkkl11.com/post/record_res`, data).then(
-            function (response) {
-                let result = response.data;
-                console.log(result)
-                if (result.code === 200) {
-                    if (result.data.result === "success") {
-                        alert("복구되었습니다.");
-                        location.reload();
-                    }else{
-                        alert("복구에 실패했습니다.");
-                    }
-                } else {
-                    alert("서버에러");
-                }
-            }
-        );
-    }
 </script>
 <div id="main" class="main">
     {#await playerList}
@@ -523,16 +466,15 @@
     }
     .label{
         font-size: 20px;
+        flex-shrink: 0;
     }
     .flex-col{
+        width: 1024px;
         display: flex;
         flex-direction: column;
         gap: 16px;
     }
     .title{
         font-size: 18px;
-    }
-    .btn-sm{
-        padding: 0rem 0.5rem;
     }
 </style>
