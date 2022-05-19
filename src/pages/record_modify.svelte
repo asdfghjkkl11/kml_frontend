@@ -3,7 +3,7 @@
     import PlayerScore from '../components/player_score.svelte';
 
     let params = Object.fromEntries(new URLSearchParams(window.location.search));
-    console.log(params)
+
     let text = params["국 길이"];
     let gameLength = (text === "반장")?"1":(text === "동장")?"0":(text === "서장")?"2":"3";
     let gameId = params["no."];
