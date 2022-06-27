@@ -30,7 +30,7 @@
         },
     ];
     let commonPoint = 0;
-    $: zeroSum = 100000 - Number(player[0].point) - Number(player[1].point) - Number(player[2].point) - Number(player[3].point) - Number(commonPoint);
+    $: zeroSum = 0 - Number(player[0].point) - Number(player[1].point) - Number(player[2].point) - Number(player[3].point) - Number(commonPoint);
     let playerList = [];
 
     let items = axios.get(serverURL+`/get/player`).then(

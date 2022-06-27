@@ -14,7 +14,14 @@
         info.nickname = this.value;
     }
     function changePoint(){
-        info.point = this.value;
+        let str = this.value;
+        let check = /^-?\d+$/;
+
+        if (check.test(str)) {
+            info.point = Number(str);
+        }else{
+            this.value = 0;
+        }
     }
     function changeId(){
         info.id = this.value;
@@ -36,7 +43,7 @@
         {/if}
     {/each}
     </select>
-    <input type="number" class="point" on:change = {changePoint} value="{point}"/>
+    <input type="text" class="point" on:change = {changePoint} value="{point}"/>
 </div>
 <style>
     .player{
