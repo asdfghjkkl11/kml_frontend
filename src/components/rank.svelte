@@ -10,8 +10,8 @@
         }
     });
 
-    let tableColDef = {
-        "종합기록(승점순)": [
+    /*
+    "종합기록(승점순)": [
             {
                 header: "순위",
                 width: "50px",
@@ -71,6 +71,30 @@
             {
                 header: "순율",
                 width: "60px",
+            },
+            {
+                header: "국수",
+                width: "60px",
+            }
+        ],
+     */
+    let tableColDef = {
+        "종합기록(승점순)": [
+            {
+                header: "순위",
+                width: "50px",
+            },
+            {
+                header: "이름",
+                width: "100px",
+            },
+            {
+                header: "승점",
+                width: "60px",
+            },
+            {
+                header: "승",
+                width: "50px",
             },
             {
                 header: "국수",

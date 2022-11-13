@@ -1,5 +1,5 @@
 <script>
-    import {api} from '../js/api.js';
+    import {api} from '../../js/api.js';
 
     let id0 = null;
     let id1 = null;

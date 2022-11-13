@@ -7,22 +7,28 @@
     async function login() {
         let res = await api({
             url: '/post/login',
+            mode: 'cors',
+            headers: {
+                'Access-Control-Allow-Origin':'*'
+            },
             data: {
                 statID: statID,
                 passwd: passwd
             }
         });
 
-        if(res?.result === "success"){
+        if(res?.result !== -1){
             localStorage.statID = statID;
-            $goto("/record");
+            sessionStorage.isLogin = 1;
+            sessionStorage.title = res?.result;
+
+            $goto("/kml/record");
         }else{
             alert("로그인에 실패했습니다.");
         }
     }
 </script>
 <div id="main" class="main">
-    <span class="title">마작기록 <span class="made">by asd</span></span>
     <div class="login">
         <label for="ID">stat ID</label><input id="ID" bind:value={statID}/>
 

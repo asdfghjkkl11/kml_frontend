@@ -1,6 +1,7 @@
 <script>
-    import {api} from '../js/api.js';
+    import {api} from '../../js/api.js';
     import {goto} from "@roxi/routify";
+    import {onMount} from "svelte";
 
     let date = new Date();
     let rankDt = date.getFullYear().toString()+"-"+(date.getMonth()+1).toString();
@@ -54,7 +55,7 @@
         }
     ];
 
-    window.onload = function() {
+    onMount(function (){
         const elems = document.getElementById('ranking-datepicker');
 
         const datepicker = new Datepicker(elems, {
@@ -68,13 +69,13 @@
                 rankDt = this.value;
             }
         });
-    }
+    });
 
     async function editEvent(e){
         let data = await items;
         let index = this.dataset.index;
         let params = new URLSearchParams(data[index]);
-        $goto("/record_modify?"+params.toString());
+        $goto("/kml/record_modify?"+params.toString());
     }
 </script>
 <div id="main" class="main">

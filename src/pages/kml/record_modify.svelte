@@ -1,38 +1,38 @@
 <script>
-    import {api} from '../js/api.js';
-    import PlayerScore from '../components/player_score.svelte';
+    import {api} from '../../js/api.js';
+    import PlayerScore from '../../components/player_score.svelte';
     import {onMount} from "svelte";
     import {goto} from "@roxi/routify";
 
-    let gameLength = '1';
+    let params = Object.fromEntries(new URLSearchParams(window.location.search));
+
+    let text = params["국 길이"];
+    let gameLength = (text === "반장")?"1":(text === "동장")?"0":(text === "서장")?"2":"3";
+    let gameId = params["no."];
     $: player = [
         {
             'wind':'0',
             'point':'0',
-            'nickname':'',
             'id':''
         },
         {
             'wind':'1',
             'point':'0',
-            'nickname':'',
             'id':''
         },
         {
             'wind':'2',
             'point':'0',
-            'nickname':'',
             'id':''
         },
         {
             'wind':'3',
             'point':'0',
-            'nickname':'',
             'id':''
         },
     ];
 
-    let commonPoint = 0;
+    let commonPoint = params["공탁점"];
     $: zeroSum = 0 - Number(player[0].point) - Number(player[1].point) - Number(player[2].point) - Number(player[3].point) - Number(commonPoint);
     $: playerList = [];
 
@@ -41,63 +41,66 @@
             url: '/get/player',
             data:{}
         });
+        for(let i = 0; i < 4; i++){
+            let str = params[(i+1)+"위"];
+
+            let index1 = str.indexOf("[");
+            let index2 = str.indexOf("]");
+            let index3 = str.lastIndexOf(": ");
+
+            let wind = str.substring(index1+1,index2);
+            let name = str.substring(index2+1,index3);
+            let point = str.substring(index3+2);
+
+            player[i].wind = (wind === "동")?"0":(wind === "남")?"1":(wind === "서")?"2":"3";
+            player[i].point = point;
+
+            let players = await playerList;
+            for(let j = 0; j < players.length; j++){
+
+                if(name === players[j].name){
+                    player[i].id = players[j].id;
+                }
+            }
+        }
     });
 
-    async function postRecord() {
+    function postRecord() {
         if(validateData()) {
             let res = api({
-                url: '/post/record_ok',
+                url: '/post/record_modify_ok',
                 data:{
+                    "modify_id": gameId,
                     "game_length": gameLength,
                     "wind[0]": player[0].wind,
-                    "nickname": player[0].nickname,
-                    "nick0": player[0].id,
+                    "nick[0]": player[0].id,
                     "point[0]": player[0].point,
                     "wind[1]": player[1].wind,
-                    "nickname1": player[1].nickname,
-                    "nick1": player[1].id,
+                    "nick[1]": player[1].id,
                     "point[1]": player[1].point,
                     "wind[2]": player[2].wind,
-                    "nickname2": player[2].nickname,
-                    "nick2": player[2].id,
+                    "nick[2]": player[2].id,
                     "point[2]": player[2].point,
                     "wind[3]": player[3].wind,
-                    "nickname3": player[3].nickname,
-                    "nick3": player[3].id,
+                    "nick[3]": player[3].id,
                     "point[3]": player[3].point,
                     "common_point": commonPoint,
                 }
             });
-
-            $goto("/record_list");
+            $goto("/kml/record_list");
         }
     }
 
-    async function validateData() {
-        if (zeroSum !== 0) {
+    function validateData(){
+        if(zeroSum !== 0){
             alert("점수합계가 맞지 않습니다.");
             return false;
         }
 
-        for (let i = 0; i < player.length; i++) {
-            if (player[i].nickname === '' && player[i].id === '') {
-                alert((i + 1) + "번째 플레이어를 선택해주세요.");
+        for(let i = 0; i < player.length; i++){
+            if(player[i].id === ''){
+                alert((i+1) + "번째 플레이어를 선택해주세요.");
                 return false;
-            } else {
-                let flag = false;
-
-                let players = await playerList;
-
-                for (let j = 0; j < players.length; j++) {
-                    if (players[j].name === player[i].nickname || player[i].nickname === "") {
-                        flag = true;
-                    }
-                }
-
-                if (!flag) {
-                    alert((i + 1) + "번째 플레이어 이름이 정확하지 않습니다.");
-                    return false;
-                }
             }
         }
 
