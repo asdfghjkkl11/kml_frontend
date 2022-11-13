@@ -1,6 +1,7 @@
-<script lang="ts">
-    import axios from 'axios';
+<script>
+    import {api} from '../js/api.js';
     import PlayerScore from '../components/player_score.svelte';
+    import {onMount} from "svelte";
 
     let params = Object.fromEntries(new URLSearchParams(window.location.search));
 
@@ -32,74 +33,15 @@
 
     let commonPoint = params["공탁점"];
     $: zeroSum = 0 - Number(player[0].point) - Number(player[1].point) - Number(player[2].point) - Number(player[3].point) - Number(commonPoint);
-    let playerList = [];
+    $: playerList = [];
 
-    let items = axios.get(serverURL+`/get/player`).then(
-        function (response) {
-            let result = response.data;
-            console.log(result)
-            if(result.code === 200) {
-                return playerList = result.data;
-            }else{
-                return [];
+    onMount(async function (){
+        playerList = api({
+            url: '/get/player',
+            data:{
+                statID: 96
             }
-        }
-    );
-
-    function postRecord() {
-        if(validateData()) {
-            let data = {
-                "modify_id": gameId,
-                "game_length": gameLength,
-                "wind[0]": player[0].wind,
-                "nick[0]": player[0].id,
-                "point[0]": player[0].point,
-                "wind[1]": player[1].wind,
-                "nick[1]": player[1].id,
-                "point[1]": player[1].point,
-                "wind[2]": player[2].wind,
-                "nick[2]": player[2].id,
-                "point[2]": player[2].point,
-                "wind[3]": player[3].wind,
-                "nick[3]": player[3].id,
-                "point[3]": player[3].point,
-                "common_point": commonPoint,
-            };
-
-            return axios.post(serverURL+`/post/record_modify_ok`, data).then(
-                function (response) {
-                    let result = response.data;
-                    console.log(result)
-                    if (result.code === 200) {
-                        alert("수정되었습니다.");
-                        location.href = "./record_list"
-                    } else {
-                        alert("서버에러");
-                    }
-                }
-            )
-        }
-    }
-
-    function validateData(){
-
-        if(zeroSum !== 0){
-            alert("점수합계가 맞지 않습니다.");
-            return false;
-        }
-
-        for(let i = 0; i < player.length; i++){
-            if(player[i].id === ''){
-                alert((i+1) + "번째 플레이어를 선택해주세요.");
-                return false;
-            }
-        }
-
-        return true;
-    }
-
-    items.then(function (result){
-        console.log(playerList)
+        });
         for(let i = 0; i < 4; i++){
             let str = params[(i+1)+"위"];
 
@@ -114,18 +56,64 @@
             player[i].wind = (wind === "동")?"0":(wind === "남")?"1":(wind === "서")?"2":"3";
             player[i].point = point;
 
-            for(let j = 0; j < playerList.length; j++){
-                if(name === playerList[j].name){
-                    player[i].id = playerList[j].id;
+            let players = await playerList;
+            for(let j = 0; j < players.length; j++){
+
+                if(name === players[j].name){
+                    player[i].id = players[j].id;
                 }
             }
         }
     });
+
+    function postRecord() {
+        if(validateData()) {
+            let res = api({
+                url: '/post/record_modify_ok',
+                data:{
+                    statID: 96,
+                    "modify_id": gameId,
+                    "game_length": gameLength,
+                    "wind[0]": player[0].wind,
+                    "nick[0]": player[0].id,
+                    "point[0]": player[0].point,
+                    "wind[1]": player[1].wind,
+                    "nick[1]": player[1].id,
+                    "point[1]": player[1].point,
+                    "wind[2]": player[2].wind,
+                    "nick[2]": player[2].id,
+                    "point[2]": player[2].point,
+                    "wind[3]": player[3].wind,
+                    "nick[3]": player[3].id,
+                    "point[3]": player[3].point,
+                    "common_point": commonPoint,
+                }
+            });
+
+            location.href = "./record_list";
+        }
+    }
+
+    function validateData(){
+        if(zeroSum !== 0){
+            alert("점수합계가 맞지 않습니다.");
+            return false;
+        }
+
+        for(let i = 0; i < player.length; i++){
+            if(player[i].id === ''){
+                alert((i+1) + "번째 플레이어를 선택해주세요.");
+                return false;
+            }
+        }
+
+        return true;
+    }
 </script>
 <div id="main" class="main flex">
-    {#await items}
+    {#await playerList}
         <p>...Loading</p>
-    {:then items }
+    {:then playerList }
         <select class="round-wind" bind:value={gameLength}>
             <option value="0">동장</option>
             <option value="1" selected>남장(반장)</option>
@@ -134,7 +122,7 @@
         </select>
         <div class="flex">
             {#each player as info}
-                <PlayerScore bind:info={info} {items}/>
+                <PlayerScore bind:info={info} {playerList}/>
             {/each}
         </div>
         <div class="flex">

@@ -1,5 +1,6 @@
-<script lang="ts">
-    import axios from 'axios';
+<script>
+    import {api} from '../js/api.js';
+
     $: items = getPlayer();
 
     let tableColDef = ["id","name"];
@@ -12,42 +13,25 @@
             postPlayer();
         }
     }
-    
+
     function getPlayer() {
-        return axios.get(serverURL+`/get/player`).then(
-            function (response) {
-                let result = response.data;
-                console.log(result)
-                if(result.code === 200) {
-                    return result.data
-                }else{
-                    return [];
-                }
+        return api({
+            url: '/get/player',
+            data:{
+                statID: 96
             }
-        )
+        });
     }
 
     function postPlayer() {
-        let data = {
-            "nick": playerName
-        };
-
-        axios.post(serverURL+`/post/registid_ok`,data).then(
-            function (response) {
-                let result = response.data;
-                console.log(result)
-                if(result.code === 200) {
-                    if(result.result === "success") {
-                        alert("추가되었습니다.")
-                        items = getPlayer();
-                    }else{
-                        alert("이미 존재하는 이름입니다.");
-                    }
-                }else{
-                    alert("서버에러");
-                }
+        api({
+            url: '/post/registid_ok',
+            data:{
+                statID: 96,
+                "nick": playerName
             }
-        )
+        });
+        items = getPlayer();
     }
 </script>
 <div id="main" class="main">

@@ -1,5 +1,5 @@
-<script lang="ts">
-    import axios from 'axios';
+<script>
+    import {api} from '../js/api.js';
 
     let date = new Date();
     let rankDt = date.getFullYear().toString()+"-"+(date.getMonth()+1).toString();
@@ -7,24 +7,13 @@
     $: year = rankDt.split("-")[0];
     $: month = rankDt.split("-")[1];
 
-    let itemMapper = {};
-    $: items = axios.get(serverURL+`/get/record_list?year=${year}&month=${month}`).then(
-        function (response) {
-            let result = response.data;
-            console.log(result)
-
-            itemMapper = {};
-            for(let i in result.data){
-                itemMapper[result.data[i]["no."]] = result.data[i];
-            }
-
-            if(result.code === 200) {
-                return result.data
-            }else{
-                return [];
-            }
+    $: items = api({
+        url: '/get/record_list',
+        data:{
+            statID: 96,
+            query: `year=${year}&month=${month}`
         }
-    );
+    });
 
     let tableColDef = [
         {
@@ -81,55 +70,11 @@
         });
     }
 
-    function editEvent(e){
-        let params = new URLSearchParams(itemMapper[this.dataset.id]);
+    async function editEvent(e){
+        let data = await items;
+        let index = this.dataset.index;
+        let params = new URLSearchParams(data[index])
         location.href = "./record_modify?"+params.toString();
-    }
-
-    function deleteEvent(e){
-        let id = this.dataset.id;
-        let data = {
-            "id": id
-        }
-        axios.post(serverURL+`/post/record_del`, data).then(
-            function (response) {
-                let result = response.data;
-                console.log(result)
-                if (result.code === 200) {
-                    if (result.data.result === "success") {
-                        alert("삭제되었습니다.");
-                        location.reload();
-                    }else{
-                        alert("삭제에 실패했습니다.");
-                    }
-                } else {
-                    alert("서버에러");
-                }
-            }
-        );
-    }
-
-    function restoreEvent(e){
-        let id = this.dataset.id;
-        let data = {
-            "id": id
-        }
-        axios.post(serverURL+`/post/record_res`, data).then(
-            function (response) {
-                let result = response.data;
-                console.log(result)
-                if (result.code === 200) {
-                    if (result.data.result === "success") {
-                        alert("복구되었습니다.");
-                        location.reload();
-                    }else{
-                        alert("복구에 실패했습니다.");
-                    }
-                } else {
-                    alert("서버에러");
-                }
-            }
-        );
     }
 </script>
 <div id="main" class="main">
@@ -155,18 +100,13 @@
                     <th >{conf.header}</th>
                 {/each}
             </tr>
-            {#each items as data}
+            {#each items as data ,index}
                 <tr>
                 {#each tableColDef as conf}
                     {#if data[conf.header] == null}
                     {:else if conf.header === "관리"}
                         <td>
-                            <button class="btn-sm btn-warning" data-id="{data['no.']}" on:click={editEvent}>수정</button>
-                            {#if data[conf.header] === "E D"}
-                                <button class="btn-sm btn-danger" data-id="{data['no.']}" on:click={deleteEvent}>삭제</button>
-                            {:else}
-                                <button class="btn-sm btn-primary" data-id="{data['no.']}" on:click={restoreEvent}>복구</button>
-                            {/if}
+                            <button class="btn-sm btn-warning" data-id="{data['no.']}" data-index="{index}" on:click={editEvent}>수정</button>
                         </td>
                     {:else}
                         <td>{data[conf.header]}</td>

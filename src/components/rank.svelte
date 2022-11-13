@@ -1,20 +1,15 @@
-<script lang="ts">
-    import axios from 'axios';
-
+<script>
+    import {api} from '../js/api.js';
     export let year;
     export let month;
 
-    $: items = axios.get(serverURL+`/get/ranking?year=${year}&month=${month}`).then(
-        function (response) {
-            let result = response.data;
-            console.log(result)
-            if(result.code === 200) {
-                return result.data
-            }else{
-                return {};
-            }
+    $: items = api({
+        url: '/get/ranking',
+        data:{
+            statID: 96,
+            query: `year=${year}&month=${month}`
         }
-    );
+    });
 
     let tableColDef = {
         "종합기록(승점순)": [

@@ -1,33 +1,23 @@
-<script lang="ts">
-    import axios from 'axios';
+<script>
+    import {api} from '../js/api.js';
 
     let id0 = null;
     let id1 = null;
 
-    let playerList = axios.get(serverURL+`/get/player`).then(
-        function (response) {
-            let result = response.data;
-            console.log(result)
-            if(result.code === 200) {
-                return result.data;
-            }else{
-                return [];
-            }
+    let playerList = api({
+        url: '/get/player',
+        data:{
+            statID: 96
         }
-    );
+    });
 
-    $: items = (id0 === null || id1 === null)?{}:axios.get(serverURL+`/get/record_versus_res?id0=${id0}&id1=${id1}`).then(
-        function (response) {
-            let result = response.data;
-            console.log(result)
-
-            if(result.code === 200) {
-                return result.data
-            }else{
-                return {};
-            }
+    $: items = (id0 === null || id1 === null)?{}:api({
+        url: '/get/record_versus_res',
+        data:{
+            statID: 96,
+            query: `id0=${id0}&id1=${id1}`
         }
-    )
+    });
 
     let tableColDef = {
         "A 동장 성적": [
@@ -267,10 +257,7 @@
                 <span class="label">사용자A</span>
                 <select on:change = {changeId0} value="{id0}">
                     {#each playerList as data}
-                        {#if exceptPlayerList.has(data["id"])}
-                        {:else}
-                            <option value={data["id"]}>{data["name"]}</option>
-                        {/if}
+                        <option value={data["id"]}>{data["name"]}</option>
                     {/each}
                 </select>
             </div>
@@ -278,10 +265,7 @@
                 <span class="label">사용자B</span>
                 <select on:change = {changeId1} value="{id1}">
                     {#each playerList as data}
-                        {#if exceptPlayerList.has(data["id"])}
-                        {:else}
-                            <option value={data["id"]}>{data["name"]}</option>
-                        {/if}
+                        <option value={data["id"]}>{data["name"]}</option>
                     {/each}
                 </select>
             </div>

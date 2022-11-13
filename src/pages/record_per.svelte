@@ -1,32 +1,22 @@
-<script lang="ts">
-    import axios from 'axios';
+<script>
+    import {api} from '../js/api.js';
 
     let id = null;
 
-    let playerList = axios.get(serverURL+`/get/player`).then(
-        function (response) {
-            let result = response.data;
-            console.log(result)
-            if(result.code === 200) {
-                return result.data;
-            }else{
-                return [];
-            }
+    let playerList = api({
+        url: '/get/player',
+        data:{
+            statID: 96
         }
-    );
+    });
 
-    $: items = (id === null)?{}:axios.get(serverURL+`/get/record_per?id=${id}`).then(
-        function (response) {
-            let result = response.data;
-            console.log(result)
-
-            if(result.code === 200) {
-                return result.data
-            }else{
-                return {};
-            }
+    $: items = (id === null)?{}:api({
+        url: '/get/record_per',
+        data:{
+            statID: 96,
+            query: `id=${id}`
         }
-    )
+    });
 
     let tableColDef = {
         "동장 성적": [
@@ -401,10 +391,7 @@
             <span class="label">사용자</span>
             <select on:change = {changeId} value="{id}">
                 {#each playerList as data}
-                    {#if exceptPlayerList.has(data["id"])}
-                    {:else}
-                        <option value={data["id"]}>{data["name"]}</option>
-                    {/if}
+                    <option value={data["id"]}>{data["name"]}</option>
                 {/each}
             </select>
         </div>

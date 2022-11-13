@@ -1,4 +1,4 @@
-<script lang="ts">
+<script>
     import Rank from "../components/rank.svelte";
 
     let date = new Date();

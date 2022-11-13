@@ -1,5 +1,5 @@
-<script lang="ts">
-    export let items;
+<script>
+    export let playerList;
     export let info;
 
     $: wind = info.wind;
@@ -36,11 +36,8 @@
     </select>
     <input type="text" class="d-none" on:change = {changeNickname}/>
     <select class="player-list" on:change = {changeId} value="{id}">
-    {#each items as data}
-        {#if exceptPlayerList.has(data["id"])}
-        {:else}
-            <option value={data["id"]}>{data["name"]}</option>
-        {/if}
+    {#each playerList as data}
+        <option value={data["id"]}>{data["name"]}</option>
     {/each}
     </select>
     <input type="text" class="point" on:change = {changePoint} value="{point}"/>
