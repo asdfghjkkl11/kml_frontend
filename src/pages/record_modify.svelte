@@ -2,6 +2,7 @@
     import {api} from '../js/api.js';
     import PlayerScore from '../components/player_score.svelte';
     import {onMount} from "svelte";
+    import {goto} from "@roxi/routify";
 
     let params = Object.fromEntries(new URLSearchParams(window.location.search));
 
@@ -38,9 +39,7 @@
     onMount(async function (){
         playerList = api({
             url: '/get/player',
-            data:{
-                statID: 96
-            }
+            data:{}
         });
         for(let i = 0; i < 4; i++){
             let str = params[(i+1)+"위"];
@@ -71,7 +70,6 @@
             let res = api({
                 url: '/post/record_modify_ok',
                 data:{
-                    statID: 96,
                     "modify_id": gameId,
                     "game_length": gameLength,
                     "wind[0]": player[0].wind,
@@ -89,8 +87,7 @@
                     "common_point": commonPoint,
                 }
             });
-
-            location.href = "./record_list";
+            $goto("/record_list");
         }
     }
 

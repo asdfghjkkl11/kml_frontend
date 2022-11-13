@@ -14,7 +14,8 @@
         });
 
         if(res?.result === "success"){
-            goto("record");
+            localStorage.statID = statID;
+            $goto("/record");
         }else{
             alert("로그인에 실패했습니다.");
         }

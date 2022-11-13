@@ -2,6 +2,7 @@
     import {api} from '../js/api.js';
     import PlayerScore from '../components/player_score.svelte';
     import {onMount} from "svelte";
+    import {goto} from "@roxi/routify";
 
     let gameLength = '1';
     $: player = [
@@ -38,9 +39,7 @@
     onMount(async function (){
         playerList = api({
             url: '/get/player',
-            data:{
-                statID: 96
-            }
+            data:{}
         });
     });
 
@@ -49,7 +48,6 @@
             let res = api({
                 url: '/post/record_ok',
                 data:{
-                    statID: 96,
                     "game_length": gameLength,
                     "wind[0]": player[0].wind,
                     "nickname": player[0].nickname,
@@ -71,7 +69,7 @@
                 }
             });
 
-            location.href = "./record_list";
+            $goto("/record_list");
         }
     }
 

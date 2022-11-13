@@ -17,9 +17,7 @@
     function getPlayer() {
         return api({
             url: '/get/player',
-            data:{
-                statID: 96
-            }
+            data:{}
         });
     }
 
@@ -27,7 +25,6 @@
         api({
             url: '/post/registid_ok',
             data:{
-                statID: 96,
                 "nick": playerName
             }
         });

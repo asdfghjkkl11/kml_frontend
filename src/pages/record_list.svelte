@@ -1,5 +1,6 @@
 <script>
     import {api} from '../js/api.js';
+    import {goto} from "@roxi/routify";
 
     let date = new Date();
     let rankDt = date.getFullYear().toString()+"-"+(date.getMonth()+1).toString();
@@ -10,7 +11,6 @@
     $: items = api({
         url: '/get/record_list',
         data:{
-            statID: 96,
             query: `year=${year}&month=${month}`
         }
     });
@@ -73,8 +73,8 @@
     async function editEvent(e){
         let data = await items;
         let index = this.dataset.index;
-        let params = new URLSearchParams(data[index])
-        location.href = "./record_modify?"+params.toString();
+        let params = new URLSearchParams(data[index]);
+        $goto("/record_modify?"+params.toString());
     }
 </script>
 <div id="main" class="main">

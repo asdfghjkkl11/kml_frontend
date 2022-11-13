@@ -6,15 +6,12 @@
 
     let playerList = api({
         url: '/get/player',
-        data:{
-            statID: 96
-        }
+        data:{}
     });
 
     $: items = (id0 === null || id1 === null)?{}:api({
         url: '/get/record_versus_res',
         data:{
-            statID: 96,
             query: `id0=${id0}&id1=${id1}`
         }
     });

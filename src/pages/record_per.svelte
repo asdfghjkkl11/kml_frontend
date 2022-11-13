@@ -5,15 +5,12 @@
 
     let playerList = api({
         url: '/get/player',
-        data:{
-            statID: 96
-        }
+        data:{}
     });
 
     $: items = (id === null)?{}:api({
         url: '/get/record_per',
         data:{
-            statID: 96,
             query: `id=${id}`
         }
     });

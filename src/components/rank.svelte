@@ -6,7 +6,6 @@
     $: items = api({
         url: '/get/ranking',
         data:{
-            statID: 96,
             query: `year=${year}&month=${month}`
         }
     });
