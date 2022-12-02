@@ -43,6 +43,10 @@
     <input type="text" class="point" on:change = {changePoint} value="{point}"/>
 </div>
 <style>
+    select{
+        background-color: white;
+        color: #474747;
+    }
     .player{
         display: flex;
         gap: 8px;

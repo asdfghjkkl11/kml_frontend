@@ -132,6 +132,10 @@
     {/await}
 </div>
 <style>
+    select{
+        background-color: white;
+        color: #474747;
+    }
     #main{
         max-width: 312px;
     }
