@@ -101,21 +101,6 @@
             if (player[i].nickname === '' && player[i].id === '') {
                 alert((i + 1) + "번째 플레이어를 선택해주세요.");
                 return false;
-            } else {
-                let flag = false;
-
-                let players = await playerList;
-
-                for (let j = 0; j < players.length; j++) {
-                    if (players[j].name === player[i].nickname || player[i].nickname === "") {
-                        flag = true;
-                    }
-                }
-
-                if (!flag) {
-                    alert((i + 1) + "번째 플레이어 이름이 정확하지 않습니다.");
-                    return false;
-                }
             }
         }
 
