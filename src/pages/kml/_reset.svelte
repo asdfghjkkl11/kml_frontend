@@ -45,9 +45,9 @@
 <!--                    <li class="nav-item">-->
 <!--                        <a class="nav-link" aria-current="page" href="/kml/record_versus_res">상대 기록</a>-->
 <!--                    </li>-->
-                    <li class="nav-item">
-                        <a class="nav-link" aria-current="page" href="/kml/player">사용자 등록</a>
-                    </li>
+<!--                    <li class="nav-item">-->
+<!--                        <a class="nav-link" aria-current="page" href="/kml/player">사용자 등록</a>-->
+<!--                    </li>-->
                 </ul>
                 <a class="logout" aria-current="page" href="/" on:click={logout}>로그아웃</a>
             </div>
