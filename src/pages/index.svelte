@@ -4,6 +4,10 @@
     let statID = "";
     let passwd = "";
 
+    if(localStorage.isLogin==1){
+        $goto("/kml/record");
+    }
+
     async function login() {
         let res = await api({
             url: '/post/login',
@@ -19,8 +23,8 @@
 
         if(res?.result !== -1){
             localStorage.statID = statID;
-            sessionStorage.isLogin = 1;
-            sessionStorage.title = res?.result;
+            localStorage.isLogin = 1;
+            localStorage.title = res?.result;
 
             $goto("/kml/record");
         }else{
@@ -72,8 +76,8 @@
         height: 48px;
         font-weight: 500;
         border-radius: 8px;
-        border: 1px solid #4873f0;
+        border: 1px solid #303030;
         background-color: white;
-        color: #4873f0;
+        color: #303030;
     }
 </style>

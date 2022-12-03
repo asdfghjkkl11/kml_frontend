@@ -2,20 +2,23 @@
     import {afterPageLoad} from "@roxi/routify";
 
     $: href  = location.href;
-    let isLogin = sessionStorage.isLogin;
-    let title = sessionStorage.title;
+    let isLogin = localStorage.isLogin;
+    let title = localStorage.title;
     let home = "/";
 
     $afterPageLoad(function (){
         href  = location.pathname;
-        isLogin = sessionStorage.isLogin;
+        isLogin = localStorage.isLogin;
         if(isLogin == 1){
             home = "/kml/record";
+        }
+        if(document.querySelector(".navbar-collapse.show")) {
+            let btn = document.querySelector(".navbar-toggler").click();
         }
     });
 
     function logout(){
-        sessionStorage.isLogin = 0;
+        localStorage.isLogin = 0;
     }
 </script>
 <div class="header">

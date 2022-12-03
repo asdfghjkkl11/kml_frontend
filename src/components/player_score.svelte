@@ -59,5 +59,8 @@
     }
     .point{
         width: 80px;
+        line-height: 14px;
+        text-align: right;
+        color: #474747;
     }
 </style>

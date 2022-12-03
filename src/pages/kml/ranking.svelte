@@ -14,7 +14,6 @@
             pickLevel: 1,
             language: 'ko',
         });
-        console.log(datepicker)
         elems.addEventListener('changeDate', function(e) {
             if(rankDt !== this.value) {
                 rankDt = this.value;

@@ -65,8 +65,8 @@
         }
     });
 
-    function postRecord() {
-        if(validateData()) {
+    async function postRecord() {
+        if(await validateData()) {
             let res = api({
                 url: '/post/record_modify_ok',
                 data:{
@@ -91,16 +91,31 @@
         }
     }
 
-    function validateData(){
-        if(zeroSum !== 0){
+    async function validateData(){
+        if (zeroSum !== 0) {
             alert("점수합계가 맞지 않습니다.");
             return false;
         }
 
-        for(let i = 0; i < player.length; i++){
-            if(player[i].id === ''){
-                alert((i+1) + "번째 플레이어를 선택해주세요.");
+        for (let i = 0; i < player.length; i++) {
+            if (player[i].nickname === '' && player[i].id === '') {
+                alert((i + 1) + "번째 플레이어를 선택해주세요.");
                 return false;
+            } else {
+                let flag = false;
+
+                let players = await playerList;
+
+                for (let j = 0; j < players.length; j++) {
+                    if (players[j].name === player[i].nickname || player[i].nickname === "") {
+                        flag = true;
+                    }
+                }
+
+                if (!flag) {
+                    alert((i + 1) + "번째 플레이어 이름이 정확하지 않습니다.");
+                    return false;
+                }
             }
         }
 

@@ -8,25 +8,25 @@
     $: player = [
         {
             'wind':'0',
-            'point':'0',
+            'point':'',
             'nickname':'',
             'id':''
         },
         {
             'wind':'1',
-            'point':'0',
+            'point':'',
             'nickname':'',
             'id':''
         },
         {
             'wind':'2',
-            'point':'0',
+            'point':'',
             'nickname':'',
             'id':''
         },
         {
             'wind':'3',
-            'point':'0',
+            'point':'',
             'nickname':'',
             'id':''
         },
@@ -44,7 +44,7 @@
     });
 
     async function postRecord() {
-        if(validateData()) {
+        if(await validateData()) {
             let res = api({
                 url: '/post/record_ok',
                 data:{
@@ -120,10 +120,10 @@
             {/each}
         </div>
         <div class="flex">
-            <div>
-                <span>공탁금</span>
-                <input type="text" class="common-point" value="{commonPoint}"/>
-            </div>
+<!--            <div>-->
+<!--                <span>공탁금</span>-->
+<!--                <input type="text" class="common-point" bind:value="{commonPoint}"/>-->
+<!--            </div>-->
             <span>오차: <span class:error={zeroSum !== 0}>{zeroSum}</span></span>
         </div>
         <button class="summit-record" on:click={postRecord}>기록</button>
@@ -155,6 +155,12 @@
     }
     .summit-record{
         width: 80px;
+        height: 40px;
+        font-weight: 500;
         align-self: end;
+        border-radius: 8px;
+        border: 1px solid #303030;
+        background-color: white;
+        color: #303030;
     }
 </style>
