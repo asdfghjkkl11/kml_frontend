@@ -34,14 +34,18 @@
     <Rank {year} {month}/>
 </div>
 <style>
+    .date-area{
+        margin-bottom: 16px;
+        display: flex;
+        gap: 16px;
+        align-items: center;
+        flex-wrap: wrap;
+    }
     .title{
+        margin: 0;
+        padding: 0;
         font-size: 20px;
         font-weight: bold;
-    }
-    .date-area{
-        display: flex;
-        gap: 40px;
-        flex-wrap: wrap;
     }
     .flex{
         display: flex;
