@@ -16,45 +16,6 @@
         }
     });
 
-    let tableColDef = [
-        {
-            header: "no.",
-            width: "50px",
-        },
-        {
-            header: "일시",
-            width: "170px",
-        },
-        {
-            header: "국 길이",
-            width: "70px",
-        },
-        {
-            header: "1위",
-            width: "150px",
-        },
-        {
-            header: "2위",
-            width: "150px",
-        },
-        {
-            header: "3위",
-            width: "150px",
-        },
-        {
-            header: "4위",
-            width: "150px",
-        },
-        {
-            header: "공탁점",
-            width: "70px",
-        },
-        {
-            header: "관리",
-            width: "130px",
-        }
-    ];
-
     onMount(function (){
         const elems = document.getElementById('ranking-datepicker');
 
@@ -89,60 +50,55 @@
     {#await items}
         <p>...Loading</p>
     {:then items }
-        <p>전체 기록</p>
-        <table class="score">
-            <colgroup>
-                {#each tableColDef as conf}
-                    <col style="width: {conf.width}">
-                {/each}
-            </colgroup>
-            <tr>
-                {#each tableColDef as conf}
-                    <th >{conf.header}</th>
-                {/each}
-            </tr>
+        <div class="list">
             {#each items as data ,index}
-                <tr>
-                {#each tableColDef as conf}
-                    {#if data[conf.header] == null}
-                    {:else if conf.header === "관리"}
-                        <td>
-                            <button class="btn-sm btn-warning" data-id="{data['no.']}" data-index="{index}" on:click={editEvent}>수정</button>
-                        </td>
-                    {:else}
-                        <td>{data[conf.header]}</td>
-                    {/if}
-                {/each}
-                </tr>
+                <div class="item" data-id="{data['no.']}" data-index="{index}" on:click={editEvent}>
+                    <span>1위: {data["1위"]}</span>
+                    <span>2위: {data["2위"]}</span>
+                    <span>3위: {data["3위"]}</span>
+                    <span>4위: {data["4위"]}</span>
+                    <span class="date">{data["일시"]}</span>
+                </div>
             {/each}
-        </table>
+        </div>
     {:catch error}
         <p>오류가 발생했습니다.</p>
     {/await}
 </div>
 <style>
+    .date-area{
+        margin-bottom: 16px;
+        display: flex;
+        gap: 16px;
+        align-items: center;
+        flex-wrap: wrap;
+    }
     .title{
+        margin: 0;
+        padding: 0;
         font-size: 20px;
         font-weight: bold;
     }
-    .date-area{
+    .list{
         display: flex;
-        gap: 40px;
-        flex-wrap: wrap;
+        flex-direction: column;
+        gap: 8px;
     }
-    table, td, th {
-        border : 1px solid black;
-        border-collapse : collapse;
-        text-align: center;
+    .item{
+        padding: 8px;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 8px;
         font-size: 14px;
+        font-weight: 500;
+        text-align: center;
+        border-radius: 8px;
+        border: 1px solid #303030;
+        background-color: white;
+        color: #303030;
     }
-    td, th{
-        padding: 4px 8px;
-    }
-    .score{
-        width: 1024px;
-    }
-    .btn-sm{
-        padding: 0rem 0.5rem;
+    .date{
+        grid-column: auto / span 2;
+        font-size: 12px;
     }
 </style>

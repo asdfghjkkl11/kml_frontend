@@ -67,7 +67,7 @@
 
     async function postRecord() {
         if(await validateData()) {
-            let res = api({
+            let res = await api({
                 url: '/post/record_modify_ok',
                 data:{
                     "modify_id": gameId,

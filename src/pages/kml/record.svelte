@@ -45,7 +45,7 @@
 
     async function postRecord() {
         if(await validateData()) {
-            let res = api({
+            let res = await api({
                 url: '/post/record_ok',
                 data:{
                     "game_length": gameLength,
